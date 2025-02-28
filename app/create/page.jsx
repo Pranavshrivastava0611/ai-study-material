@@ -4,10 +4,18 @@ import SelectOption from './_components/SelectOption';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import TopicInput from './_components/TopicInput';
+import { v4 as uuidv4} from 'uuid';
+import { useUser } from '@clerk/clerk-react';
+import axios from 'axios';
+import { Loader } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 function Create() {
     const [step,setStep] = useState(0);
     const [formData,setFormData] = useState([]);
+    const {user} = useUser();
+    const [loading,setLoading] = useState(false);
+    const router = useRouter();
 
     const handleUserInput = (fieldName,fieldValue)=>{
         setFormData(prev=>({
@@ -15,7 +23,21 @@ function Create() {
             [fieldName] : fieldValue
         }))
 
-        console.log(formData)
+        console.log("formdata",formData)
+    }
+
+    const GenerateCourseOutline = async ()=>{
+        setLoading(true);
+        const courseId = uuidv4();
+        const result = await axios.post('/api/generate-course-outline',{
+            courseId: courseId,
+            ...formData,
+            createdBy:user?.primaryEmailAddress?.emailAddress
+        });
+        setLoading(false);
+        router.replace('/dashboard')
+
+        console.log(result.data.result.resp)
     }
   return (
     <div className='flex flex-col items-center p-5 md:px-24 lg:px-36  mt-20'>
@@ -33,7 +55,7 @@ function Create() {
          }}variant="outline">Previous</Button> : '-'}
         { step==0 ? <Button onClick={()=>{
             setStep(step+1);
-        }}>Next</Button> : <Button>Generate</Button>}
+        }}>Next</Button> : <Button onClick={GenerateCourseOutline} disabled={loading}>{loading ? <Loader className="animate-spin"/> : 'Generate'}</Button>}
       </div>
     </div>
   )

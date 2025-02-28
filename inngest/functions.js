@@ -1,7 +1,9 @@
+import { generateNotesAiModel } from "@/configs/AiModel";
 import { inngest } from "./client";
 import { db } from '@/configs/db';
-import { USER_TABLE } from '@/configs/schema';
+import { CHAPTER_NOTES_TABLE, USER_TABLE } from '@/configs/schema';
 import {eq} from 'drizzle-orm';
+
 
 
 export const helloWorld = inngest.createFunction(
@@ -49,3 +51,41 @@ export const CreateNewUser = inngest.createFunction(
     return "Success"; 
   }
 );
+
+
+export const GenerateNotes = inngest.createFunction(
+  {id : 'generate-course'},
+  {event : 'notes.generate'},
+  async ({event,step}) => {
+    const {course} = event.data;
+
+    const notesResult = await step.run('Generate Chapter Notes', async () => {
+      const Chapters = course?.courseLayout;
+      let index  = 0;
+      Chapters.forEach(async (chapter)=>{
+        const PROMPT = `Generate exam material detail content for each chapter , Make sure to include all topic point in the content , make sure to give content in HTML format (Do not add HTMLKL, Head ,Body,title tag),The chapters :  ${chapter} `;
+        const result = await generateNotesAiModel.sendMessage(PROMPT);
+        const aiResp = result.response.text();
+
+        await db.insert(CHAPTER_NOTES_TABLE).values(
+          {
+            chapterId : index,
+            courseId : course?.courseId,
+            notes : aiResp
+          }
+        )
+        index = index + 1;
+      })
+      return 'Completed'
+    });
+
+
+  }
+)
+
+//update Status to 'Ready'
+
+const updateCourseStatusResult = await step.run('Update Course Status to Ready',async ()=>{
+  const result = await db.update(STUDY_MATERIAL_TABLE).set({status : 'Ready'}).where(eq(STUDY_MATERIAL_TABLE.courseId,course?.courseId));
+  return "Success";
+}); 

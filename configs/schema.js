@@ -1,9 +1,31 @@
-import { boolean } from 'drizzle-orm/gel-core'
-import {pgTable , serial , varchar} from 'drizzle-orm/pg-core'
+import { boolean, integer } from 'drizzle-orm/gel-core'
+import {pgTable , serial , varchar,text} from 'drizzle-orm/pg-core'
+import { json } from 'drizzle-orm/gel-core'
+
 
 export const USER_TABLE = pgTable('users', {
     id: serial().primaryKey(),
     name: varchar().notNull(),
     email: varchar().notNull(),
     isMember : boolean().default(false),
+})
+
+export const STUDY_MATERIAL_TABLE = pgTable('studyMateria',{
+    id: serial().primaryKey(),
+    courseId : varchar().notNull(),
+    courseType : varchar().notNull(),
+    topic :varchar().notNull(),
+    difficulty : varchar().default('Easy'),
+    courseLayout : json(),
+    createdBy : varchar().notNull(),
+    status : varchar().default('Generating'),
+}
+)
+
+export const CHAPTER_NOTES_TABLE=pgTable('ChapterNotes',{
+    id: serial().primaryKey(),
+    courseId : varchar().notNull(),
+    chapterId : integer().notNull(),
+    notes:text()
+    
 })
