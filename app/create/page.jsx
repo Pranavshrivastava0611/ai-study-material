@@ -9,6 +9,8 @@ import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+// import { toast } from 'sonner';
+import toast from 'react-hot-toast';
 
 function Create() {
     const [step,setStep] = useState(0);
@@ -26,6 +28,8 @@ function Create() {
         console.log("formdata",formData)
     }
 
+    const notify = ()=> toast("Your course is been created, Please refresh the page!!");
+
     const GenerateCourseOutline = async ()=>{
         setLoading(true);
         const courseId = uuidv4();
@@ -36,7 +40,9 @@ function Create() {
         });
         setLoading(false);
         router.replace('/dashboard')
-
+        // toast();
+        notify();
+        
         console.log(result.data.result.resp)
     }
   return (

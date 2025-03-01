@@ -16,7 +16,7 @@ export async function POST(req) {
 
         //
         const aiResponse = await courseOutlineAIModel.sendMessage(PROMPT);
-        const aiResponseText = await aiResponse.response.text(); // Ensure this is awaited
+        const aiResponseText =  aiResponse.response.text(); // Ensure this is awaited
         const aiResult = JSON.parse(aiResponseText);
 
         // Fix: Store JSON data properly in the database
@@ -28,14 +28,16 @@ export async function POST(req) {
             courseLayout: JSON.stringify(aiResult), // Store as JSON string
         }).returning({resp : STUDY_MATERIAL_TABLE});
 
+        console.log("ai response", JSON.stringify(aiResult));
+
 
         const result = await inngest.send({
-            name : 'notes.generate',
+            name : "notes.generate",
             data : {
                 course : dbResult[0].resp
             }
-
         });
+        console.log("course", dbResult[0].resp);
 
         console.log(result);
 

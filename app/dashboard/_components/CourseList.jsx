@@ -4,12 +4,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import CourseCard from "./CourseCard";
+import { RefreshCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function CourseList() {
     const { user } = useUser();
     const [courseList,setCourseList] = useState([]);
+    const [loading,setLoading] = useState(false);
 
     const getCourseList = async () => {
+        setLoading(true);
         try {
             if (!user?.primaryEmailAddress?.emailAddress) {
                 console.warn("User email not available yet");
@@ -25,6 +29,7 @@ function CourseList() {
         } catch (error) {
             console.error("Error fetching courses:", error.response?.data || error.message);
         }
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -35,19 +40,23 @@ function CourseList() {
 
     return (
         <>
-        <div className="mt-10">
+        <div className="mt-10 flex justify-between">
             <h2 className="font-bold text-2xl">Your Study Material</h2>
+            <Button onClick={getCourseList} className="border-primary  hover:bg-blue-400 "><RefreshCcw className={`${loading && 'animate-spin'}`}/> Refresh</Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-5">
-            {courseList.map((course,index) => (
+            { !loading ? courseList.map((course,index) => (
+                    <CourseCard course={course} key={course.id || course.name} />
+            )) : 
+            [1,2,3,4,5,6].map((_,index)=>(
                 <>
-                    <CourseCard course={course} key={index} />
-
+                <div className="h-56 w-full bg-slate-200 rounded-lg animate-pulse" key={index}>
+                </div>
                 </>
-            ))}
+            ))
+            }
         </div>
-        
         </>
     )
 }
