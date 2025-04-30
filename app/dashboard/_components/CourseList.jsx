@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useUser } from "@clerk/nextjs";
-import CourseCard from "./CourseCard";
+import axios from "axios";
 import { RefreshCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useContext, useEffect, useState } from "react";
+import { Button } from "../../../components/ui/button";
+import { CourseCountContext } from "../../_context/CourseCountContext";
+import CourseCard from "./CourseCard";
 
 function CourseList() {
     const { user } = useUser();
     const [courseList,setCourseList] = useState([]);
     const [loading,setLoading] = useState(false);
+    const {totalCourses,setTotalCourses} = useContext(CourseCountContext);
 
     const getCourseList = async () => {
         setLoading(true);
@@ -26,6 +28,7 @@ function CourseList() {
 
             console.log("Course List:", result.data,result);
             setCourseList(result.data.result);
+            setTotalCourses(result.data.result?.length);
         } catch (error) {
             console.error("Error fetching courses:", error.response?.data || error.message);
         }
@@ -51,7 +54,7 @@ function CourseList() {
             )) : 
             [1,2,3,4,5,6].map((_,index)=>(
                 <>
-                <div className="h-56 w-full bg-slate-200 rounded-lg animate-pulse" key={index}>
+                <div className="h-56 w-full bg-slate-200 rounded-lg animate-pulse" key={index + 4}>
                 </div>
                 </>
             ))

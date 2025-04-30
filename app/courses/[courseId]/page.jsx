@@ -2,8 +2,10 @@
 import React, { useState,useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import axios from 'axios';
-import DashboardHeader from '@/app/dashboard/_components/DashboardHeader';
+// import DashboardHeader from '@/app/dashboard/_components/DashboardHeader';
 import CourseIntroCard from './_components/CourseIntroCard';
+import StudyMaterialSection from './_components/StudyMaterialSection';
+import ChapterList from './_components/ChapterList';
 
 function Courses() {
     const {courseId} = useParams();
@@ -20,9 +22,11 @@ function Courses() {
 
   return (
     <div>
-     <DashboardHeader/>
-     <div className='mx-10 md:mx-36 lg:px-60 mt-10'>
+     <div className=''>
       <CourseIntroCard course={course}/>
+      {/*study material card here  */}
+      <StudyMaterialSection courseId={courseId} course={course}/>
+      <ChapterList course={course}/>
       </div>
     </div>
   )

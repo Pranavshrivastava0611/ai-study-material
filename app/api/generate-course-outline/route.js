@@ -1,8 +1,8 @@
-import { courseOutlineAIModel } from "@/configs/AiModel";
+import { courseOutlineAIModel } from "../../../configs/AiModel";
 import { NextResponse } from "next/server";
-import { db } from "@/configs/db";
-import { STUDY_MATERIAL_TABLE } from "@/configs/schema";
-import { inngest } from "@/inngest/client";
+import  db  from "../../../configs/db";
+import { STUDY_MATERIAL_TABLE } from "../../../configs/schema";
+import { inngest } from "../../../inngest/client";
 
 export async function POST(req) {
     try {
@@ -12,7 +12,7 @@ export async function POST(req) {
         console.log("Received Request:", { courseId, topic, studyType, difficultyLevel, createdBy });
 
         // Fix: Use studyType instead of undefined courseType
-        const PROMPT = `Generate a study material for ${topic} for ${studyType} and level of difficulty will be ${difficultyLevel} with summary of course, list of chapters along with summary for each chapter, and topic list in each chapter in JSON format.`;
+        const PROMPT = `Generate a study material for ${topic} for ${studyType} and level of difficulty will be ${difficultyLevel} with summary of course, List of chapters(Max 6) along with summary and emoji icon for each chapter ans for the whole course also  , Topic list in each chapter in JSON format.`;
 
         //
         const aiResponse = await courseOutlineAIModel.sendMessage(PROMPT);

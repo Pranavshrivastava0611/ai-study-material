@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import { Progress } from '@/components/ui/progress'
+// import {Progress}  from '../../../components/ui/progress'
 
 function CourseIntroCard({course}) {
   return (
@@ -10,7 +10,7 @@ function CourseIntroCard({course}) {
       <div className=' '>
         <h2 className='font-bold text-2xl'>{course?.courseLayout.course_title}</h2>
         <p className='mt-2'>{course?.courseLayout?.course_summary}</p>
-        <Progress className="mt-3"/>
+        {/* <Progress className="mt-3"/> */}
 
         <h2 className='mt-3 text-lg text-blue-700'>Total Chapter {'=>'}  {course?.courseLayout?.chapters?.length}</h2>
       </div>

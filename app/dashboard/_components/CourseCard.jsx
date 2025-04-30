@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import { Progress } from '@/components/ui/progress'
-import { Button } from '@/components/ui/button'
+import { Progress } from '../../../components/ui/progress'
+import { Button } from '../../../components/ui/button'
 import { RefreshCcw } from 'lucide-react'
 import Link from 'next/link'
 

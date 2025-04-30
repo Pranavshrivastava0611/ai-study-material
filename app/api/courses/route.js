@@ -1,8 +1,7 @@
-import { db } from "@/configs/db";
+import  db  from "../../../configs/db";
 import { desc, eq } from "drizzle-orm"; // ✅ Import eq() properly
-import { COURSES_TABLE } from "@/configs/schema";
 import { NextResponse } from "next/server";
-import { STUDY_MATERIAL_TABLE } from "@/configs/schema";
+import { STUDY_MATERIAL_TABLE } from "../../../configs/schema";
 
 export async function POST(req) {
     try {

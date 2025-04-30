@@ -1,4 +1,6 @@
-import { Textarea } from '@/components/ui/textarea'
+"use client"
+
+import { Textarea } from '../../../components/ui/textarea'
 import React from 'react'
 import {
     Select,
@@ -8,7 +10,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select"
+  } from "../../../components/ui/select"
 
 function TopicInput({setTopic,setDifficultyLevel}) {
   return (

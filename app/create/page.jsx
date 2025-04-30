@@ -2,7 +2,7 @@
 import React, { use } from 'react'
 import SelectOption from './_components/SelectOption';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import TopicInput from './_components/TopicInput';
 import { v4 as uuidv4} from 'uuid';
 import { useUser } from '@clerk/clerk-react';

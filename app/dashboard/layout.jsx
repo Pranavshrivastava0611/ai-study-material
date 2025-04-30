@@ -1,9 +1,15 @@
-import Sidebar from './_components/Sidebar'
-import React from 'react'
-import DashboardHeader from './_components/DashboardHeader'
+"use client"
+import React from 'react';
+import { CourseCountContext } from "../_context/CourseCountContext";
+import DashboardHeader from './_components/DashboardHeader';
+import Sidebar from './_components/Sidebar';
+import { useState } from 'react';
+
 
 function DashboardLayout({children}) {
+  const [totalCourses, setTotalCourses] = useState(0);
   return (
+    <CourseCountContext.Provider value={{ totalCourses, setTotalCourses }}>
     <div>
         <div className='md:w-64 hidden md:block fixed'>
           <Sidebar/>
@@ -16,6 +22,7 @@ function DashboardLayout({children}) {
 
         </div>
     </div>
+    </CourseCountContext.Provider>
   )
 }
 

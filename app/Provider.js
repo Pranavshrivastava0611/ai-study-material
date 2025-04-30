@@ -2,10 +2,10 @@
 
 import React, { useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { db } from '@/configs/db';
-import { USER_TABLE } from '@/configs/schema';
 import {eq} from 'drizzle-orm';
 import axios from 'axios';
+import db from '../configs/db';
+import { USER_TABLE } from "../configs/schema";
 
 
 function Provider({children}) {
@@ -13,19 +13,17 @@ function Provider({children}) {
   console.log("user from the provider",user);
 
   const CheckIsNewUser = async ()=>{
-    // const result = await db.select().from(USER_TABLE).where(eq(USER_TABLE.email,user?.primaryEmailAddress?.emailAddress));
+    const result = await db.select().from(USER_TABLE).where(eq(USER_TABLE.email,user?.primaryEmailAddress?.emailAddress));
 
     
-    // if(result.length===0){
-    //  const userResponse =  await db.insert(USER_TABLE).values({
-    //     name : user?.fullName,
-    //     email : user?.primaryEmailAddress?.emailAddress,
-    //   }).returning({id : USER_TABLE.id})
-    //   console.log("userResponse",userResponse);
+    if(result.length===0){
+     const userResponse =  await db.insert(USER_TABLE).values({
+        name : user?.fullName,
+        email : user?.primaryEmailAddress?.emailAddress,
+      }).returning({id : USER_TABLE.id})
+      console.log("userResponse",userResponse);
 
-      
-    // }
-
+    }
     const resp = await axios.post('/api/create-user',{user:user}
      )
 

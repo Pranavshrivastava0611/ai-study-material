@@ -1,20 +1,22 @@
 "use client"
-import React from 'react'
+import { LayoutDashboard, Shield, UserCircle } from 'lucide-react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { LayoutDashboard,  Shield, UserCircle } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import { Progress } from '@/components/ui/progress'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useContext } from 'react'
+import { Button } from '../../../components/ui/button'
+import { Progress } from '../../../components/ui/progress'
+import { CourseCountContext } from "../../_context/CourseCountContext";
 
 function Sidebar() {
+  const { totalCourses, setTotalCourses } = useContext(CourseCountContext);
+  console.log("totalCourses : ", totalCourses); 
   const menuList = [
     {
       name : 'Dashboard',
       icon : LayoutDashboard,
       path : '/dashboard'
     },
-
     {
       name : 'Upgrade',
       icon : Shield,
@@ -44,19 +46,18 @@ function Sidebar() {
               <menu.icon  />
               <h2>{menu.name}</h2>
             </div> 
-            
           ))}
         </div>
       </div>
       
       <div className='border p-3 bg-slate-100 mt-5 rounded-lg absolute bottom-10 w-[88%]'>
-        <h2 className='text-lg mb-2'>Available Credits :5</h2>
-        <Progress value={30}/>
-        <h2 className='text-sm'>1 out of 5 credits used</h2>
+        <h2 className='text-lg mb-2'>Available Credits :{5-totalCourses}</h2>
+        <Progress value={(totalCourses/5)*100}/>
+        <h2 className='text-sm'>{totalCourses} out of 5 credits used</h2>
         <Link href={'/dashboard/upgrade'} className='text-primary text-xs mt-3 '>Upgrade to create more</Link>
       </div>
     </div>
   )
 }
 
-export default Sidebar
+export default Sidebar 
