@@ -54,6 +54,7 @@ function Quiz() {
         data={quiz || []}
         stepCount={stepCount}
         setStepCount={(v) => setStepCount(v)}
+       
       />
 
       <div className="mt-6">
@@ -105,7 +106,7 @@ function Quiz() {
           )}
       </div>
       <div>
-        
+
       </div>
     </div>
   );

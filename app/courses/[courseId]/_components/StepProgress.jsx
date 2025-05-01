@@ -2,30 +2,37 @@
 import React from 'react'
 import { Button } from "../../../../components/ui/button";
 
-function StepProgress({stepCount,setStepCount,data}) {
-    console.log("stepProgress data " , data);
+function StepProgress({ stepCount, setStepCount, data }) {
+  console.log("stepProgress data", data);
+
   return (
-    <div className='flex gap-5 items-center'>
-        {stepCount!=0 &&  <Button
-                    variant="outline"
-                    onClick={() => setStepCount(stepCount - 1)}
-                    size="sm"
-                  >
-                    Previous
-                  </Button>}
-        {data.map((item,index)=>(
-            <>
-            <div
-              key={index}
-              className={`w-full h-2 rounded-full ${
-                index < stepCount ? "bg-primary" : "bg-gray-200"
-              }`}
-            ></div>
-            </>
-        ))}
-        <Button variant="outline" size="sm" onClick={() => setStepCount(stepCount + 1)}>Next</Button>
+    <div className="hidden md:flex gap-5 items-center">
+      {stepCount !== 0 && (
+        <Button
+          variant="outline"
+          onClick={() => setStepCount(stepCount - 1)}
+          size="sm"
+        >
+          Previous
+        </Button>
+      )}
+
+      {data.map((item, index) => (
+        <div
+          key={index}
+          className={`w-full h-2 rounded-full ${index < stepCount ? "bg-primary" : "bg-gray-200"}`}
+        ></div>
+      ))}
+
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => setStepCount(stepCount + 1)}
+      >
+        Next
+      </Button>
     </div>
-  )
+  );
 }
 
-export default StepProgress
+export default StepProgress;

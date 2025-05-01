@@ -18,7 +18,7 @@ function WelcomeBanner() {
           Hello, {user?.fullName}
         </h2>
         <p className="text-sm sm:text-base">
-          Welcome back, it's time to get back and start learning!
+          Welcome, it's time to get back and start learning!
         </p>
       </div>
     </div>
