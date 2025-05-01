@@ -26,14 +26,13 @@ function Sidebar({ isMobileMenuOpen, onClose }) {
       {/* Sidebar container */}
       <div
         className={`
-          fixed z-50 lg:z-auto lg:static 
-          inset-0 lg:inset-auto 
+          fixed z-50 md:z-auto md:static 
+          inset-0 md:inset-auto 
           h-full w-64 bg-white shadow-md transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
-          lg:translate-x-0
+          md:translate-x-0
         `}
       >
-        {/* Grid layout with top content and bottom upgrade section */}
         <div className="grid grid-rows-[1fr_auto] h-full p-5">
           {/* Top section */}
           <div>
@@ -67,8 +66,8 @@ function Sidebar({ isMobileMenuOpen, onClose }) {
             </div>
           </div>
 
-          {/* Bottom fixed upgrade section */}
-          <div className="border p-3 bg-slate-100 rounded-lg mt-6 lg:hidden md:hidden">
+          {/* Bottom section – only visible on small/medium */}
+          <div className="border p-3 bg-slate-100 rounded-lg mt-6 md:block lg:hidden">
             <h2 className="text-lg mb-2">Available Credits: {5 - totalCourses}</h2>
             <Progress value={(totalCourses / 5) * 100} />
             <h2 className="text-sm mt-1">{totalCourses} out of 5 credits used</h2>
@@ -83,10 +82,10 @@ function Sidebar({ isMobileMenuOpen, onClose }) {
         </div>
       </div>
 
-      {/* Mobile overlay */}
-      {isMobileMenuOpen && (
+      {/* Overlay for mobile and medium screens */}
+      {(isMobileMenuOpen) && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
           onClick={onClose}
         />
       )}

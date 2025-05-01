@@ -14,16 +14,14 @@ function DashboardLayout({ children }) {
     <CourseCountContext.Provider value={{ totalCourses, setTotalCourses }}>
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <div className="md:w-64">
-          <Sidebar
-            isMobileMenuOpen={showSidebar}
-            onClose={() => setShowSidebar(false)}
-          />
-        </div>
+        <Sidebar
+          isMobileMenuOpen={showSidebar}
+          onClose={() => setShowSidebar(false)}
+        />
 
-        <div className="flex-1 w-full md:ml-64">
-          {/* Mobile Header */}
-          <div className="md:hidden p-4 border-b flex items-center justify-between">
+        <div className="flex-1 w-full">
+          {/* Header for small and medium devices */}
+          <div className="md:flex p-4 border-b items-center justify-between lg:hidden">
             <button onClick={() => setShowSidebar(true)}>
               <Menu />
             </button>
@@ -31,7 +29,7 @@ function DashboardLayout({ children }) {
           </div>
 
           {/* Desktop Header */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <DashboardHeader />
           </div>
 
