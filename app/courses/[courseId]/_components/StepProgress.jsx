@@ -23,7 +23,7 @@ function StepProgress({ stepCount, setStepCount, data }) {
           className={`w-full h-2 rounded-full ${index < stepCount ? "bg-primary" : "bg-gray-200"}`}
         ></div>
       ))}
-
+      
       <Button
         variant="outline"
         size="sm"
