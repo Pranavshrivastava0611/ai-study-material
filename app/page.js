@@ -82,13 +82,13 @@ const Hero = () => {
               <div className="absolute -bottom-8 left-24 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
 
               <div className="relative bg-white shadow-2xl rounded-2xl overflow-hidden">
-                {/* <Image
-                  src="#"
+                <Image
+                  src="/pexels-photo-5905885.jpeg"
                   alt="Student learning online"
                   width={600}
                   height={400}
                   className="w-full"
-                /> */}
+                />
               </div>
             </div>
           </motion.div>

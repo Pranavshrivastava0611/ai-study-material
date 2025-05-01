@@ -34,14 +34,16 @@ function Flashcard() {
       studyType: 'Flashcard'
     });
     console.log("result from the flashcard", result.data);
-    setFlashCards(result.data.content);
+    setFlashCards(
+      result.data.content.flashcards ? result.data.content.flashcards : result.data.content
+    );
   };
   useEffect(() => {
     GetFlashCards();
   }, []);
 
   useEffect(() => {
-    console.log("flashcards", flashCards);
+    console.log("flashcardshelooo", flashCards);
   }, [flashCards]);
 
   const handleClick = () => {

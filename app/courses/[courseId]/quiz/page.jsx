@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
@@ -47,8 +47,8 @@ function Quiz() {
   }, [stepCount]);
 
   return (
-    <div className="max-w-3xl mx-auto p-4 sm:p-6 md:p-8">
-      <h2 className="font-bold text-2xl text-center mb-6">Quiz</h2>
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8">
+      <h2 className="font-bold text-2xl sm:text-3xl text-center mb-6">Quiz</h2>
 
       <StepProgress
         data={quiz || []}
@@ -68,7 +68,10 @@ function Quiz() {
       {correctAnswers === false && (
         <div className="mt-6 border p-4 border-red-700 bg-red-100 rounded-lg text-sm sm:text-base">
           <h2 className="font-bold text-red-600">Incorrect</h2>
-          <p>Correct answer is: <span className="font-semibold">{isCorrectAnswer}</span></p>
+          <p>
+            Correct answer is:{' '}
+            <span className="font-semibold">{isCorrectAnswer}</span>
+          </p>
         </div>
       )}
 
@@ -78,6 +81,32 @@ function Quiz() {
           <p>Your answer is correct!</p>
         </div>
       )}
+
+      {/* Final responsive button section */}
+      <div className="mt-10 flex flex-wrap justify-between gap-4">
+        {stepCount > 0 && (
+          <button
+            onClick={() => setStepCount(stepCount - 1)}
+            className="w-full sm:w-auto px-6 py-2 text-sm sm:text-base bg-gray-200 hover:bg-gray-300 rounded-lg transition-all"
+          >
+            ← Previous
+          </button>
+        )}
+
+        {Array.isArray(quiz) &&
+          stepCount < quiz?.length - 1 &&
+          correctAnswers !== null && (
+            <button
+              onClick={() => setStepCount(stepCount + 1)}
+              className="w-full sm:w-auto px-6 py-2 text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-all"
+            >
+              Next →
+            </button>
+          )}
+      </div>
+      <div>
+        
+      </div>
     </div>
   );
 }

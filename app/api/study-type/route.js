@@ -26,7 +26,11 @@ export async function POST(req) {
             return NextResponse.json({
               result: {
                 notes,
-                flashCard: flashCard ? flashCard.content : null,
+                flashCard: flashCard
+                  ? flashCard.content.flashcards
+                    ? flashCard.content.flashcards
+                    : flashCard.content
+                  : null,
                 quiz: quiz ? quiz.content : null,
                 qa: qa ? qa.content : null,
               },

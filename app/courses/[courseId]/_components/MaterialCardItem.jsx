@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { Button } from '../../../../components/ui/button';
 import { RefreshCcw } from 'lucide-react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function MaterialCardItem({ item, studyTypeContent, course, refreshData }) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const GenerateContent = async () => {
     setLoading(true);
@@ -51,6 +53,12 @@ function MaterialCardItem({ item, studyTypeContent, course, refreshData }) {
 
   const ready = isContentReady();
 
+  const handleViewClick = () => {
+    if (ready) {
+      router.push(`/courses/${course?.courseId}${item.path}`);
+    }
+  };
+
   return (
     <div
       className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${
@@ -72,7 +80,8 @@ function MaterialCardItem({ item, studyTypeContent, course, refreshData }) {
       <Button
         className="mt-3 w-full"
         variant="outline"
-        onClick={!ready ? GenerateContent : undefined}
+        onClick={!ready ? GenerateContent : handleViewClick}
+        disabled={loading}
       >
         {loading && <RefreshCcw className="animate-spin mr-2" />}
         {!ready ? 'Generate' : 'View'}
